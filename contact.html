@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>adroitglobalteam</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,300,700" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./style1.css" />
+  <link href="carousel.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,400italic,700,900' rel='stylesheet'
+    type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+  <link href="css/custom.css" rel="stylesheet">
+  <script src="js/validation.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    function msg() {
+      var name = document.getElementById("txtname").value;
+      var email = document.getElementById("txtemail").value;
+      var number = document.getElementById("txtnumber").value;
+      var message = document.getElementById("txtmessage").value;
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      var phoneformat = /^\d{10}$/;
+      if (name == "") {
+        alert("Please enter name");
+        document.getElementById("txtname").focus();
+        return false;
+      }
+      else if (email == "") {
+        alert("Please enter email");
+        document.getElementById("txtemail").focus();
+        return false;
+      }
+      else if (!email.match(mailformat)) {
+        alert("Please enter a valid email");
+        document.getElementById("txtemail").focus();
+        return false;
+      }
+      else if (number == "") {
+        alert("Please enter number");
+        document.getElementById("txtnumber").focus();
+        return false;
+      }
+      else if (!number.match(phoneformat)) {
+        alert("Please enter a valid mobile number");
+        document.getElementById("txtnumber").focus();
+        return false;
+      }
+      else if (message == "") {
+        alert("Please enter message");
+        document.getElementById("txtmessage").focus();
+        return false;
+      }
+      else {
+
+        $.ajax({
+          type: "POST",
+          url: "WebService.asmx/sendcontactEMail",
+          data: '{"name": "' + name + '", "email": "' + email + '","number":"' + number + '","message":"' + message + '"}',
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (msg) {
+            alert("Thank you! Your message has been sent successfully.");
+          },
+          error: function (req, status, error) {
+            alert("Error try again");
+          }
+        });
+      }
+      document.getElementById("txtname").value = "";
+      document.getElementById("txtemail").value = "";
+      document.getElementById("txtnumber").value = "";
+      document.getElementById("txtmessage").value = "";
+      return false;
+    }
+  </script>
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-light p-md-3">
+    <div class="container">
+      <a class="navbar-brand" href="#">LOGO</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="mx-auto"></div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="solutions.html">SOLUTIONS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="aboutus.html">ABOUT US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="whyus.html" >WHY US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="services.html">SERVICES</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="contact.html" >CONTACT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- end of navbar -->
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <div class="navy-line"></div>
+      <h1>Contact Us</h1>
+    </div>
+  </div>
+  <section class="container contact-div">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <form method="get" action="#" name="contactform" id="contactform">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="name" class="form-control" id="txtname" aria-describedby="emailHelp"
+            placeholder="Please Enter Name">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputPassword1">Email </label>
+          <input type="email" class="form-control" id="txtemail" placeholder="Please Enter Email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mobile: </label>
+          <input type="text" class="form-control" id="txtnumber" placeholder="Please Enter Mobile Number">
+        </div>
+        <div class="form-group">
+          <label for="exampleTextarea">Message</label>
+          <textarea class="form-control" id="txtmessage" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="submit" onclick="msg()">Leave a message</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+  </section>
+  <section id="contact" class="gray-section contact" style="margin-top:0px;">
+    <div class="container">
+      <div class="row m-b-lg">
+        <div class="col-lg-12 text-center">
+          <div class="navy-line"></div>
+          <h1>Contact Us</h1>
+          <p></p>
+        </div>
+      </div>
+      <div class="row m-b-lg">
+        <div class="col-lg-12 text-center">
+          <address>
+            <strong><span class="navy">Adroit Global.</span></strong><br />
+            enquiry@adroitglobalteam.com<br />
+            PH: +91 734 925 3344
+          </address>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-center">
+        <h4 class="mb-4"></h4>
+        <ul class="social-items">
+          <li><span class="social-icon social-facebook"><i class="fa fa-facebook"></i></span></li>
+
+          <li><span class="social-icon social-linkedin"><i class="fa fa-linkedin"></i></span></li>
+
+          <li><span class="social-icon social-twitter"><i class="fa fa-twitter"></i></span></li>
+        </ul>
+      </div>
+      <footer class="page-footer footer-transparent font-small blue pt-4">
+
+        <!-- Footer Links -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+          <a href="#">AndroitGlobalTeam </a>
+        </div>
+        <!-- Copyright -->
+
+      </footer>
+    </div>
+  </section>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    var nav = document.querySelector('nav');
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 10) {
+        nav.classList.add('bg-dark', 'shadow');
+      } else {
+        nav.classList.remove('', 'shadow');
+      }
+    });
+  </script>
+
+  <!-- Bootstrap framework -->
+  <script src="js/swiper.min.js"></script>
+  <!-- Swiper for image and text sliders -->
+  <script src="js/purecounter.min.js"></script>
+  <!-- Purecounter counter for statistics numbers -->
+  <script src="js/isotope.pkgd.min.js"></script>
+  <!-- Isotope for filter -->
+  <script src="js/scripts.js"></script>
+  <!-- Custom scripts -->
+  <!-- Mainly scripts -->
+  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+  <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- Custom and plugin javascript -->
+  <script src="js/inspinia.js"></script>
+  <script src="js/plugins/pace/pace.min.js"></script>
+  <script src="js/plugins/wow/wow.min.js"></script>
+  <script src="js/modernizr.custom.js"></script>
+</body>
+</html>
